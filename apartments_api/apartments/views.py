@@ -48,6 +48,14 @@ class UsersViews(APIView):
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
 
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors)
+        
+
 
 # GenericViews + mixins
 class ApartmentsGenericView(ListModelMixin, CreateModelMixin, GenericAPIView):
